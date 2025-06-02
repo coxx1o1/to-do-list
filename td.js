@@ -21,7 +21,14 @@ addbtn.addEventListener("click", () => {
     createTaskElement(taskText, false);
     saveTasks();
     updateTaskSummary();
-    input.value = "";
+    input.value = "";  // Clear input after adding
+  }
+});
+
+// Add this listener for Enter key on input field
+input.addEventListener("keypress", (e) => {
+  if (e.key === "Enter") {
+    addbtn.click();  // simulate Add button click
   }
 });
 
@@ -135,4 +142,13 @@ function saveTasks() {
   localStorage.setItem("tasks", JSON.stringify(tasksArray));
 }
 
-
+// Update task summary counts
+function updateTaskSummary() {
+  const allTasks = task.querySelectorAll("li");
+  const total = allTasks.length;
+  let completed = 0;
+  allTasks.forEach((li) => {
+    const span = li.querySelector("span");
+    if (span.classList.contains("completed")) completed++;
+  });
+}
